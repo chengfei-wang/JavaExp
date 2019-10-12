@@ -1,154 +1,97 @@
 package main;
 
-import java.io.*;
-import java.util.EnumMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.swing.*;
 
 class LoginFrame {
-    void init() {
-        JFrame frame = new JFrame("iChat: Login");
+    JFrame frame= new JFrame("iChat: Login");
+    JPanel panel = new JPanel();
 
+    JTextField userText = new JTextField(20);
+    JPasswordField passwordText = new JPasswordField(20);
+    JButton registerButton = new JButton("注册");
+    JButton loginButton = new JButton("登录");
+
+    LoginFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(290, 170);
         frame.setResizable(false);
-
-        JPanel panel = new JPanel();
         frame.add(panel);
 
         panel.setLayout(null);
 
-        JLabel userLabel = new JLabel("User:");
-        userLabel.setBounds(10,20,80,25);
+        JLabel userLabel = new JLabel("用户名");
+        userLabel.setBounds(10,20,60,25);
         panel.add(userLabel);
 
-        JTextField userText = new JTextField(20);
-        userText.setBounds(100,20,165,25);
+        userText.setBounds(80,20,185,25);
         panel.add(userText);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(10,50,80,25);
+        JLabel passwordLabel = new JLabel("密    码");
+        passwordLabel.setBounds(10,50,60,25);
         panel.add(passwordLabel);
 
-        JPasswordField passwordText = new JPasswordField(20);
-        passwordText.setBounds(100,50,165,25);
+        passwordText.setBounds(80,50,185,25);
         panel.add(passwordText);
 
-        JButton registerButton = new JButton("register");
-        registerButton.setBounds(10, 80, 80, 25);
+        registerButton.setBounds(10, 80, 90, 25);
         panel.add(registerButton);
 
-        JButton loginButton = new JButton("login");
-        loginButton.setBounds(185, 80, 80, 25);
+        loginButton.setBounds(175, 80, 90, 25);
         panel.add(loginButton);
+    }
 
+    void show() {
         frame.setVisible(true);
     }
+
+    void dismiss() {
+        frame.setVisible(false);
+    }
+
 }
 
-
-class Util {
-    enum Field {
-        USERID, TOKEN, NICKNAME;
-    }
-
-    public static HashMap<Field, String> getFields() {
-        try {
-            String conf = readFile("/app/iChat/conf");
-            HashMap<Field, String> map = new HashMap<Field, String>();
-            String[] fields = conf.split("::");
-            for(String s : fields) {
-                String[] entry = s.split("/");
-                switch(entry[0]) {
-                    case "USERID":
-                        map.put(Field.USERID, entry[1]);
-                        break;
-                    case "TOKEN":
-                        map.put(Field.TOKEN, entry[1]);
-                        break;
-                    case "NICKNAME":
-                        map.put(Field.NICKNAME, entry[1]);
-                        break;
-                }
-            }
-
-            return map;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    static void setFields(HashMap<Field, String> map) {
-        String userId = map.get(Field.USERID).replace("/", "").replace(":", "");
-        String token = map.get(Field.TOKEN).replace("/", "").replace(":", "");
-        String nickname = map.get(Field.NICKNAME).replace("/", "").replace(":", "");
-        String conf = "USERID/"+userId+"::TOKEN/"+token+"::NICKNAME/"+nickname;
-        writeFile("/app/iChat/conf", conf);
-    }
-
-    public static void writeFile(String filename, String content) {
-        File file = new File(filename);
-        FileWriter fw = null;
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            fw = new FileWriter(file);
-            fw.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fw != null) {
-                try {
-                    fw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+class App implements ActionListener {
+    LoginFrame loginFrame = new LoginFrame();
+    void init() {
+        var userInfo = Util.getFields();
+        if (userInfo != null) {
+            System.out.println("用户缓存存在");
+            //todo...
+        } else {
+            System.out.println("暂无用户缓存");
+            loginFrame.show();
+            loginFrame.loginButton.addActionListener(this);
+            loginFrame.registerButton.addActionListener(this);
         }
     }
 
-    public static String readFile(String filename) {
-        File file = new File(filename);
-        InputStream is = null;
-        Reader isr = null;
-        try {
-            is = new FileInputStream(file);
-            isr = new InputStreamReader(is);
-            StringBuffer sb = new StringBuffer();
-            int index = 0;
-            while (-1 != (index = isr.read())) {
-                sb.append((char)index);
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-                if (isr != null) {
-                    isr.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginFrame.loginButton) {
+            System.out.println("LOGIN");
+            var userId = loginFrame.userText.getText();
+            var password = loginFrame.passwordText.getPassword();
+            System.out.println("UID: "+userId+"/PWD: "+ Util.getMD5(new String(password)));
+        } else if (e.getSource() == loginFrame.registerButton) {
+            System.out.println("REGISTER");
         }
-        return null;
     }
 }
-
 
 public class Main {
     public static void main(String[] args) {
-        // LoginFrame login = new LoginFrame();
-        // login.init();
-        Util.getFields();
+//        var map = new HashMap<Util.Field, String>();
+//        map.put(Util.Field.NICKNAME, "WCF");
+//        map.put(Util.Field.TOKEN, "et871te81h1hd119j2d");
+//        map.put(Util.Field.USERID, "2008153477");
+//        Util.setFields(map);
+
+        App app = new App();
+        app.init();
+
     }
 }
