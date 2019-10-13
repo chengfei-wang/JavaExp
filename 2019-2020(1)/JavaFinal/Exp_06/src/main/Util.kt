@@ -1,9 +1,5 @@
 package main
 
-//import android.util.Log
-//import com.google.gson.JsonElement
-//import com.google.gson.JsonObject
-//import com.google.gson.JsonParser
 import java.io.*
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
