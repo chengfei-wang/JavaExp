@@ -28,4 +28,7 @@ hs_err_pid*
 
 # out/
 config_release.json
-# target/
+target/
+.settings/
+.project
+.classpath
