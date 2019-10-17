@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad3ee5b9-1ca6-4a7d-ae57-43b9864c55c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/王程飞_201806061219.md" beforeDir="false" afterPath="$PROJECT_DIR$/王程飞_201806061219.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/out/production/Exp_06/META-INF/Exp_06.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/out/production/Exp_06/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/out/artifacts/ichat/WEB-INF/classes/META-INF/server.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/out/artifacts/ichat/conf/config_debug.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/out/artifacts/ichat/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/server.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/src/main/java/config/Config.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/src/main/java/servlet/User.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaFinal/Exp_06/server/src/main/java/util/Value.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +32,11 @@
   <component name="ProjectId" id="1SJ84vIJuAigp1kLMOiG9aa771Q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -67,6 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1571270151030</updated>
       <workItem from="1571270158460" duration="6035000" />
+      <workItem from="1571285141783" duration="45000" />
     </task>
     <servers />
   </component>
