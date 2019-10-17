@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets
 import javax.servlet.http.HttpServletResponse
 
 object FileUtil {
-    private fun readAll(file: File): String {
+    fun readAll(file: File): String {
         try {
             val fileReader = FileReader(file)
             val reader = InputStreamReader(FileInputStream(file), StandardCharsets.UTF_8)

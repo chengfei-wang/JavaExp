@@ -1,7 +1,5 @@
 package util
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import java.io.File
 
 class CONF(
@@ -18,7 +16,6 @@ class CONF(
 
         const val dateFormat = "yyyy/MM/dd-HH:mm:ss"
 
-        val gson: Gson = GsonBuilder().setDateFormat(dateFormat).create()
         val root: String
             get() {
                 val url = CONF::class.java.classLoader.getResource("./")
@@ -28,10 +25,10 @@ class CONF(
             get() {
                 val conf = when (mode) {
                     MODE.DEBUG -> {
-                        File("$root/conf/config_debug.json")
+                        File("$root/conf/config.debug")
                     }
                     MODE.RELEASE -> {
-                        File("$root/conf/config_release.json")
+                        File("$root/conf/config.release")
                     }
                 }
                 val json = FileUtil.readJson(conf)

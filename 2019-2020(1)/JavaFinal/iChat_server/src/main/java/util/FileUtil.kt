@@ -1,13 +1,12 @@
 package util
 
 import com.alibaba.fastjson.JSONObject
-import net.coobird.thumbnailator.Thumbnails
 import java.io.*
 import java.nio.charset.StandardCharsets
 import javax.servlet.http.HttpServletResponse
 
 object FileUtil {
-    fun readAll(file: File): String {
+    private fun readAll(file: File): String {
         try {
             val fileReader = FileReader(file)
             val reader = InputStreamReader(FileInputStream(file), StandardCharsets.UTF_8)
@@ -51,12 +50,4 @@ object FileUtil {
         outputStream.close()
         inputStream.close()
     }
-
-    fun writePicture2Response(resp: HttpServletResponse, path: String, scale: Double, quality: Double) {
-        resp.reset()
-        val outputStream = resp.outputStream
-        Thumbnails.of(path).scale(scale).outputQuality(quality).toOutputStream(outputStream)
-        outputStream.close()
-    }
-
 }

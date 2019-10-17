@@ -25,10 +25,10 @@ class CONF(
             get() {
                 val conf = when (mode) {
                     MODE.DEBUG -> {
-                        File("$root/conf/config.debug")
+                        File("$root/conf/config_debug.json")
                     }
                     MODE.RELEASE -> {
-                        File("$root/conf/config.release")
+                        File("$root/conf/config_release.json")
                     }
                 }
                 val json = FileUtil.readJson(conf)

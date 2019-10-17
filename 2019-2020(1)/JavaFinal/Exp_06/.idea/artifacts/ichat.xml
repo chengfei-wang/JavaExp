@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="ichat">
-    <output-path>$PROJECT_DIR$/out/artifacts</output-path>
-    <root id="archive" name="ichat.war">
-      <element id="artifact" artifact-name="ichat:war exploded" />
-    </root>
-  </artifact>
-</component>

@@ -58,11 +58,7 @@ object Value {
         return String(resultCharArray)
     }
 
-    fun htmlTemplate(): String = FileUtil.readAll(File("${CONF.root}/html/template.html"))
-
-    fun markdownAirCss(): String = FileUtil.readAll(File("${CONF.root}/css/markdown-air.css"))
-
-    fun random() = ("${Date().time}${(10000000..99999999).random()}".hashCode() and Integer.MAX_VALUE).toString()
+    fun random() = ("${Date().time}${(10000000000..99999999999).random()}".hashCode() and Integer.MAX_VALUE).toString()
 
     fun HttpServletRequest.fields(): HashMap<String, String> {
         val fields = HashMap<String, String>()
