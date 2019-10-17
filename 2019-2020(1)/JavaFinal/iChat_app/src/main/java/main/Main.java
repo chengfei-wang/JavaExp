@@ -82,10 +82,6 @@ class App implements ActionListener {
     }
 }
 
-class O{
-
-}
-
 public class Main {
     public static void main(String[] args) {
 //        var map = new HashMap<Util.Field, String>();
@@ -97,36 +93,6 @@ public class Main {
         App app = new App();
         app.init();
 
-//        Object o = make(6);
-//        var inner =make(9);
-//
-//        System.out.println(inner.getClass());
-//
-//        System.out.println(o.toString());
-//        o.m();
-//
-//        int[][] i = new int[4][];
     }
 
-
-//    private static Object make(int i) {
-//        class I {
-//            private I(int i) {
-//                this.i = i;
-//            }
-//
-//            public void m() {
-//                System.out.println("1323");
-//            }
-//
-//            @Override
-//            public String toString() {
-//                return "class I "+i;
-//            }
-//
-//            private int i;
-//        }
-//
-//        return new I(i);
-//    }
 }
