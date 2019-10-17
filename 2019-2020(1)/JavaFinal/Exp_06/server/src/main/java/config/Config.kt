@@ -46,3 +46,22 @@ object Config {
         st0.close()
     }
 }
+
+fun c(): A {
+    return object : A {
+        override fun a() {
+
+        }
+
+        override fun b() {
+
+        }
+
+    }
+}
+
+interface A {
+    fun a()
+    fun b()
+}
+
