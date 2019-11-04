@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title><center>实验3  类的继承与多态、访问权限的控制<center></title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="center%e5%ae%9e%e9%aa%8c3-%e7%b1%bb%e7%9a%84%e7%bb%a7%e6%89%bf%e4%b8%8e%e5%a4%9a%e6%80%81%e8%ae%bf%e9%97%ae%e6%9d%83%e9%99%90%e7%9a%84%e6%8e%a7%e5%88%b6center"><center>实验3  类的继承与多态、访问权限的控制<center></h1>
+<pre><code><div>班  级:     软工1805
+学  号:     201806061219 
+姓  名:     王程飞
+完成日期:   2019.10.17
+</div></code></pre>
+<h4 id="1-%e6%8c%89%e4%bb%a5%e4%b8%8b%e8%a6%81%e6%b1%82%e7%bc%96%e5%86%99%e7%a8%8b%e5%ba%8f">1. 按以下要求编写程序：</h4>
+<blockquote>
+<p>(1) 编写一个三角形类Triangle，满足以下要求：
+1)定义private的成员变量a,b,c分别表示三角形的三条边。
+2)定义public修饰的setX方法和getX方法，分别对a、b和c进行赋值和返回值，如setA表示对a进行赋值，getA表示返回a的值，以此类推。
+3)定义private修饰的isTriangle方法，判断当前对象的三条边能否构成三角形，如果是则返回true，否则返回false；
+4)定义public修饰的getArea方法，打印三角形的面积。若当前对象无法构成三角形，则打印“边长为a，b和c的三条边无法构成三角形”（打印时，要打印出a、b和c具体的值），否则打印三角形的面积（要求取2位小数）。
+(2) 编写测试类TestTriangle，随机生成三个数作为三角形的三条边，打印它们构成三角形的面积。</p>
+</blockquote>
+<h4 id="%e4%bb%a3%e7%a0%81">代码</h4>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> java.text.DecimalFormat;
+<span class="hljs-keyword">import</span> java.util.Random;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestTriangle</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        test_01();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test_01</span><span class="hljs-params">()</span> </span>{
+        Random random = <span class="hljs-keyword">new</span> Random();
+        <span class="hljs-keyword">double</span> a = random.nextDouble()*<span class="hljs-number">100</span>;
+        <span class="hljs-keyword">double</span> b = random.nextDouble()*<span class="hljs-number">100</span>;
+        <span class="hljs-keyword">double</span> c = random.nextDouble()*<span class="hljs-number">100</span>;
+        Triangle triangle = <span class="hljs-keyword">new</span> Triangle(a, b ,c);
+        triangle.getArea();
+    }
+}
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Triangle</span> </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> a, b ,c;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getA</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> a;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setA</span><span class="hljs-params">(<span class="hljs-keyword">double</span> a)</span> </span>{
+        <span class="hljs-keyword">this</span>.a = a;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getB</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> b;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setB</span><span class="hljs-params">(<span class="hljs-keyword">double</span> b)</span> </span>{
+        <span class="hljs-keyword">this</span>.b = b;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getC</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> c;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setC</span><span class="hljs-params">(<span class="hljs-keyword">double</span> c)</span> </span>{
+        <span class="hljs-keyword">this</span>.c = c;
+    }
+
+    Triangle(<span class="hljs-keyword">double</span> a, <span class="hljs-keyword">double</span> b, <span class="hljs-keyword">double</span> c) {
+        <span class="hljs-keyword">this</span>.a = a;
+        <span class="hljs-keyword">this</span>.b = b;
+        <span class="hljs-keyword">this</span>.c = c;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isTriangle</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> !(a + b &lt;= c || a + c &lt;= b || b + c &lt;= a);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">getArea</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (!isTriangle()) {
+            System.out.println(<span class="hljs-string">"边长为"</span>+
+                a+<span class="hljs-string">"，"</span>+b+<span class="hljs-string">"和"</span>+c+<span class="hljs-string">"的三条边无法构成三角形"</span>);
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+        }
+        <span class="hljs-keyword">double</span> p = (a+b+c)/<span class="hljs-number">2</span>;
+        <span class="hljs-keyword">double</span> area = Math.sqrt(p*(p-a)*(p-b)*(p-c));
+        System.out.println(<span class="hljs-string">"三角形边长："</span>+a+<span class="hljs-string">", "</span>+b+<span class="hljs-string">", "</span>
+            +c+<span class="hljs-string">"，面积"</span>+<span class="hljs-keyword">new</span> DecimalFormat(<span class="hljs-string">"#.00"</span>).format(area));
+        <span class="hljs-keyword">return</span> area;
+    }
+
+}
+</div></code></pre>
+<h4 id="%e7%bb%93%e6%9e%9c">结果</h4>
+<p>三角形边长：77.97483286378088, 96.1034571822503, 71.65327283344952，面积2749.44</p>
+<h4 id="2-%e7%94%a8%e7%b1%bb%e7%9a%84%e7%bb%a7%e6%89%bf%e5%85%b3%e7%b3%bb%e7%bc%96%e5%86%99%e7%a8%8b%e5%ba%8f">2. 用类的继承关系编写程序</h4>
+<blockquote>
+<p>描述下图1中的类层次，其中人为父类Person，其属性包括：姓名、性别、出生日期等，方法为printInfo()打印信息 。教师Teacher还包括学校和工号属性；学生Student还包括学校、学号、专业、年级和班级等属性；编写一个测试类TestPerson，在main方法中创建1个教师和1个学生对象，输出对象的所有属性信息。<br>提高要求（可选做）：将Person、Student和Teacher三个类打包到p1,而测试类TestPerson在工程的缺省包中。</p>
+</blockquote>
+<p><img src="file:///d:\Documents\Github\JavaExp\2019-2020(1)\Exp_3\t2.png" alt="t2"></p>
+<h4 id="%e4%bb%a3%e7%a0%81-1">代码</h4>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> p1.Student;
+<span class="hljs-keyword">import</span> p1.Teacher;
+
+<span class="hljs-keyword">import</span> java.util.Calendar;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestPerson</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(<span class="hljs-number">2000</span>, Calendar.JANUARY, <span class="hljs-number">1</span>);
+        Student student = <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"stu-name"</span>, 
+            <span class="hljs-string">'男'</span>, calendar1.getTime(), 
+            <span class="hljs-string">"ZJUT"</span>, <span class="hljs-string">"201800000000"</span>, <span class="hljs-string">"majorA"</span>, <span class="hljs-number">2</span>, <span class="hljs-string">"class-01"</span>);
+        student.printInfo();
+        Teacher teacher = <span class="hljs-keyword">new</span> Teacher(<span class="hljs-string">"tch-name"</span>, 
+            <span class="hljs-string">'男'</span>, calendar1.getTime(), <span class="hljs-string">"ZJUT"</span>, <span class="hljs-string">"000000"</span>);
+        teacher.printInfo();
+    }
+}
+
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p1;
+
+<span class="hljs-keyword">import</span> java.text.SimpleDateFormat;
+<span class="hljs-keyword">import</span> java.util.Date;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>{
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">char</span> sex;
+    <span class="hljs-keyword">private</span> Date birth;
+
+    Person(String name, <span class="hljs-keyword">char</span> sex, Date birth) {
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.sex = sex;
+        <span class="hljs-keyword">this</span>.birth = birth;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"姓名 "</span>+name+<span class="hljs-string">", 性别 "</span>+sex
+            +<span class="hljs-string">", 出生日期 "</span>+<span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"YYYY/MM/dd"</span>).format(birth);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printInfo</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-keyword">this</span>);
+    }
+}
+
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p1;
+
+<span class="hljs-keyword">import</span> java.util.Calendar;
+<span class="hljs-keyword">import</span> java.util.Date;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span> </span>{
+    <span class="hljs-keyword">private</span> String school, id, major, cls;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> grade;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Student</span><span class="hljs-params">(String name, <span class="hljs-keyword">char</span> sex, Date birth, String school, String id, 
+        String major, <span class="hljs-keyword">int</span> grade, String cls)</span> </span>{
+        <span class="hljs-keyword">super</span>(name, sex, birth);
+        <span class="hljs-keyword">this</span>.school = school;
+        <span class="hljs-keyword">this</span>.id = id;
+        <span class="hljs-keyword">this</span>.major = major;
+        <span class="hljs-keyword">this</span>.cls = cls;
+        <span class="hljs-keyword">this</span>.grade = grade;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.toString()+<span class="hljs-string">"\n"</span>
+                +<span class="hljs-string">"学校 "</span>+school+<span class="hljs-string">", 学号 "</span>+id+<span class="hljs-string">", 专业 "</span>+major+<span class="hljs-string">", 年级 "</span>
+                +grade+<span class="hljs-string">", 班级"</span>+cls;
+    }
+}
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p1;
+
+<span class="hljs-keyword">import</span> java.util.Date;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Teacher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span> </span>{
+    <span class="hljs-keyword">private</span> String school, id;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Teacher</span><span class="hljs-params">(String name, <span class="hljs-keyword">char</span> sex, 
+        Date birth, String school, String id)</span> </span>{
+        <span class="hljs-keyword">super</span>(name, sex, birth);
+        <span class="hljs-keyword">this</span>.school = school;
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.toString()+<span class="hljs-string">"\n"</span>
+                +<span class="hljs-string">"学校 "</span>+school+<span class="hljs-string">", 工号 "</span>+id;
+    }
+}
+
+</div></code></pre>
+<h4 id="%e7%bb%93%e6%9e%9c-1">结果</h4>
+<p>姓名 stu-name, 性别 男, 出生日期 2000/01/01
+学校 ZJUT, 学号 201800000000, 专业 majorA, 年级 2, 班级class-01
+姓名 tch-name, 性别 男, 出生日期 2000/01/01
+学校 ZJUT, 工号 000000</p>
+<h4 id="3">3.</h4>
+<blockquote>
+<p>(1) 编写一个抽象类Animal，其成员变量有name，age，weight表示动物名、年龄和重量。方法有showInfo()、move()和eat()，其中后面两个方法是抽象方法；编写一个类Bird继承Animal，实现相应的方法，通过构造方法给name，age，weight分别赋值，showInfo()打印鸟名、年龄和重量，move()方法打印鸟的运动方式，eat()打印鸟喜欢吃的食物；编写一个类Dog继承Animal，实现相应的方法，通过构造方法给name，age，weight分别赋值，showInfo()打印狗名、年龄和重量，move()方法打印狗的运动方式，eat()打印狗喜欢吃的食物；最后编写测试类TestAnimal，用Animal类型的变量，调用Bird和Dog对象的三个方法。<br>提高要求（可选做）：将Animal、Bird和Dog三个类打包到p3,而测试类TestAnimal在工程的缺省包中。</p>
+</blockquote>
+<h4 id="%e4%bb%a3%e7%a0%81-2">代码</h4>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> p3.Bird;
+<span class="hljs-keyword">import</span> p3.Dog;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestAnimal</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Dog dog = <span class="hljs-keyword">new</span> Dog(<span class="hljs-string">"little-dog"</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4.3</span>);
+        dog.eat();
+        dog.move();
+        dog.showInfo();
+        Bird bird = <span class="hljs-keyword">new</span> Bird(<span class="hljs-string">"little-bird"</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0.10</span>);
+        bird.eat();
+        bird.move();
+        bird.showInfo();
+    }
+}
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p3;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+    String name;
+    <span class="hljs-keyword">int</span> age;
+    <span class="hljs-keyword">double</span> weight;
+    Animal(String name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">double</span> weight) {
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.age = age;
+        <span class="hljs-keyword">this</span>.weight = weight;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showInfo</span><span class="hljs-params">()</span></span>;
+}
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p3;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bird</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Bird</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">double</span> weight)</span> </span>{
+        <span class="hljs-keyword">super</span>(name, age, weight);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"鸟喜欢吃虫子"</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"鸟会飞"</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showInfo</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"鸟, 名字："</span>+name
+            +<span class="hljs-string">", 年龄："</span>+age+<span class="hljs-string">", 体重："</span>+weight+<span class="hljs-string">" kg"</span>);
+    }
+}
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">package</span> p3;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Dog</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> age, <span class="hljs-keyword">double</span> weight)</span> </span>{
+        <span class="hljs-keyword">super</span>(name, age, weight);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"狗喜欢吃肉"</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"狗会跑"</span>);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showInfo</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"狗, 名字："</span>+name
+            +<span class="hljs-string">", 年龄："</span>+age+<span class="hljs-string">", 体重："</span>+weight+<span class="hljs-string">" kg"</span>);
+    }
+}
+
+</div></code></pre>
+<h4 id="%e7%bb%93%e6%9e%9c-2">结果</h4>
+<p>狗喜欢吃肉
+狗会跑
+狗, 名字：little-dog, 年龄：2, 体重：4.3 kg
+鸟喜欢吃虫子
+鸟会飞
+鸟, 名字：little-bird, 年龄：1, 体重：0.1 kg</p>
+
+    </body>
+    </html>
