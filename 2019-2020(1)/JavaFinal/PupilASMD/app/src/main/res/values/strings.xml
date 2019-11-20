@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PupilASMD</string>
     <string name="home">主页</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test">练习</string>
+    <string name="analysis">分析</string>
 </resources>
