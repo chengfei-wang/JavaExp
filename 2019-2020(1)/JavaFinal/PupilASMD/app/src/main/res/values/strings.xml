@@ -4,4 +4,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="test">练习</string>
     <string name="analysis">分析</string>
+    <string name="operator">运算法则</string>
+    <string name="opt_add">+</string>
+    <string name="opt_minus">-</string>
+    <string name="opt_divide">÷</string>
+    <string name="opt_times">×</string>
 </resources>

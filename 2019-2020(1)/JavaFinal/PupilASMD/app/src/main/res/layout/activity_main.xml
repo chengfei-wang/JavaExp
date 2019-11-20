@@ -22,16 +22,16 @@
                     android:layout_height="match_parent">
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/main_icon"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        app:srcCompat="@color/colorAccent" />
+                        app:srcCompat="@drawable/ic_edit_white" />
                     <TextView
                         android:id="@+id/main_title"
                         android:text="@string/test"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold"
                         android:layout_toEndOf="@id/main_icon"
                         android:layout_centerVertical="true"
@@ -42,19 +42,20 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/menu_problem_settings"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        app:srcCompat="@color/colorAccent" />
+                        app:srcCompat="@drawable/ic_more_vertical_white" />
                 </RelativeLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <xyz.nfcv.pupil.asmd.widget.ViewPager
             android:id="@+id/main_viewPager"
+            android:layout_below="@id/app_bar"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -68,6 +69,5 @@
         android:layout_gravity="start"
         android:tag="NAV"
         android:id="@+id/fragment_nav"/>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

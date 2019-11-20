@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.ProblemSettingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="36dp">
+        <Button
+            android:background="@drawable/ic_check_gray_128dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/opt_add"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/opt_add"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/border_capsule_28dp"
+            android:textColor="@color/gray"
+            android:layout_height="match_parent"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/opt_minus"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/opt_minus"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/border_capsule_28dp"
+            android:textColor="@color/gray"
+            android:layout_height="match_parent"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/opt_times"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/opt_times"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/border_capsule_28dp"
+            android:textColor="@color/gray"
+            android:layout_height="match_parent"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/opt_divide"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/opt_divide"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/border_capsule_28dp"
+            android:textColor="@color/gray"
+            android:layout_height="match_parent"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>
