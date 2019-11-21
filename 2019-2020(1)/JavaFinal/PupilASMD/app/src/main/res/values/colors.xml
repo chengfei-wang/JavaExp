@@ -11,4 +11,6 @@
     <color name="deep_gray">#999999</color>
     <color name="trans">#00FFFFFF</color>
     <color name="half_trans">#99FFFFFF</color>
+    <color name="start_green">#AED581</color>
+    <color name="stop_yellow">#FFF176</color>
 </resources>

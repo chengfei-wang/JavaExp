@@ -32,14 +32,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HomeNavFragment.
         main_icon.setOnClickListener(this)
         menu_problem_settings.setOnClickListener(this)
         MainPagerAdapter(supportFragmentManager, main_viewPager)
-
-
-//        val list = ASMD.generateProblem(16, 1, ASMD.Operator.SUB)
-//        val data = Gson().toJson(list)
-//        val l: ArrayList<ASMD.Problem> = Gson().fromJson(data, object : TypeToken<ArrayList<ASMD.Problem>>(){}.type)
-//        Log.d(TAG, l.toString())
-//        Log.d(TAG, data)
-
     }
 
     override fun onClick(v: View?) {

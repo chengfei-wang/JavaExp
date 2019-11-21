@@ -15,7 +15,15 @@ object ASMD {
     }
 
     enum class Operator {
-        ADD, SUB, MULTI, DIVIDE
+        ADD, SUB, MULTI, DIVIDE;
+        override fun toString(): String {
+            return when(this) {
+                ADD -> "+"
+                SUB -> "-"
+                MULTI -> "×"
+                DIVIDE -> "÷"
+            }
+        }
     }
 
     class Problem(val operator: Operator, val arg0: Int, val arg1: Int) {
@@ -27,12 +35,7 @@ object ASMD {
         }
 
         override fun toString(): String {
-            return "$arg0 "+ when(operator) {
-                Operator.ADD -> "+"
-                Operator.SUB -> "-"
-                Operator.MULTI -> "*"
-                Operator.DIVIDE -> "/"
-            }+" $arg1 = $answer"
+            return "$arg0 $operator $arg1 = $answer"
         }
     }
 
