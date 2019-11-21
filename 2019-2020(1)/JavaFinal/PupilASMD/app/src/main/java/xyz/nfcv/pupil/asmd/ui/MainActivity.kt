@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.nfcv.pupil.asmd.R
 import xyz.nfcv.pupil.asmd.`fun`.ASMD
@@ -33,9 +35,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HomeNavFragment.
 
 
 //        val list = ASMD.generateProblem(16, 1, ASMD.Operator.SUB)
-//        for(i in list){
-//            Log.d(this.javaClass.name, i.toString())
-//        }
+//        val data = Gson().toJson(list)
+//        val l: ArrayList<ASMD.Problem> = Gson().fromJson(data, object : TypeToken<ArrayList<ASMD.Problem>>(){}.type)
+//        Log.d(TAG, l.toString())
+//        Log.d(TAG, data)
+
     }
 
     override fun onClick(v: View?) {
@@ -63,5 +67,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HomeNavFragment.
                 main_drawer.closeDrawer(GravityCompat.START)
             }
         }
+    }
+
+    companion object {
+        const val TAG = "MA"
     }
 }

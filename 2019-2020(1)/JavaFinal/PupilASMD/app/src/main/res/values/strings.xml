@@ -11,4 +11,5 @@
     <string name="opt_multi">×</string>
     <string name="num_len">数字位数</string>
     <string name="two">2</string>
+    <string name="equals">=</string>
 </resources>
