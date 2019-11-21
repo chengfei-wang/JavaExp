@@ -2,6 +2,7 @@ package xyz.nfcv.pupil.asmd.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.nfcv.pupil.asmd.R
+import xyz.nfcv.pupil.asmd.`fun`.ASMD
 import xyz.nfcv.pupil.asmd.adapter.MainPagerAdapter
 import xyz.nfcv.pupil.asmd.ui.fragment.HomeNavFragment
 import xyz.nfcv.pupil.asmd.ui.fragment.HomeNavFragment.Pages.*
@@ -28,6 +30,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, HomeNavFragment.
         main_icon.setOnClickListener(this)
         menu_problem_settings.setOnClickListener(this)
         MainPagerAdapter(supportFragmentManager, main_viewPager)
+
+
+//        val list = ASMD.generateProblem(16, 1, ASMD.Operator.SUB)
+//        for(i in list){
+//            Log.d(this.javaClass.name, i.toString())
+//        }
     }
 
     override fun onClick(v: View?) {
