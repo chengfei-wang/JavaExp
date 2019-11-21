@@ -84,30 +84,30 @@
                 android:layout_width="0dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/opt_add"
-                android:textColor="@color/gray"
+                android:textColor="@drawable/radio_select_text"
                 android:textSize="24sp"
                 android:gravity="center"
                 android:layout_height="match_parent" />
             <RadioButton
-                android:id="@+id/opt_minus"
+                android:id="@+id/opt_sub"
                 android:background="@drawable/border_capsule_selector"
                 android:button="@null"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_marginHorizontal="8dp"
-                android:text="@string/opt_minus"
-                android:textColor="@color/gray"
+                android:text="@string/opt_sub"
+                android:textColor="@drawable/radio_select_text"
                 android:textSize="24sp"
                 android:gravity="center"
                 android:layout_height="match_parent" />
             <RadioButton
-                android:id="@+id/opt_times"
+                android:id="@+id/opt_multi"
                 android:background="@drawable/border_capsule_selector"
                 android:button="@null"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_marginHorizontal="8dp"
-                android:text="@string/opt_times"
+                android:text="@string/opt_multi"
                 android:textColor="@drawable/radio_select_text"
                 android:textSize="24sp"
                 android:gravity="center"
@@ -120,12 +120,57 @@
                 android:layout_width="0dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/opt_divide"
-                android:textColor="@color/gray"
+                android:textColor="@drawable/radio_select_text"
                 android:textSize="24sp"
                 android:gravity="center"
                 android:layout_height="match_parent" />
         </RadioGroup>
     </LinearLayout>
-    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <TextView
+            android:id="@+id/label_num_len"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:text="@string/num_len"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/border_capsule_left_28dp"
+                android:src="@drawable/ic_sub_32dp"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/opt_sub" />
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:background="@drawable/border"
+                android:textColor="@color/gray"
+                android:text="@string/two" />
+
+            <ImageView
+                android:background="@drawable/border_capsule_right_28dp"
+                android:src="@drawable/ic_add_32dp"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/opt_add" />
+        </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

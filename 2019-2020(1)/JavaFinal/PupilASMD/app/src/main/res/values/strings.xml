@@ -6,7 +6,9 @@
     <string name="analysis">分析</string>
     <string name="operator">运算法则</string>
     <string name="opt_add">+</string>
-    <string name="opt_minus">-</string>
+    <string name="opt_sub">-</string>
     <string name="opt_divide">÷</string>
-    <string name="opt_times">×</string>
+    <string name="opt_multi">×</string>
+    <string name="num_len">数字位数</string>
+    <string name="two">2</string>
 </resources>
