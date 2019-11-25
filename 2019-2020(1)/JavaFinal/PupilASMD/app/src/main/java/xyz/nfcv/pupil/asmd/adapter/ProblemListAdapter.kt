@@ -10,13 +10,12 @@ import kotlinx.android.synthetic.main.item_problem.view.*
 import xyz.nfcv.pupil.asmd.R
 import xyz.nfcv.pupil.asmd.`fun`.ASMD
 
-class ProblemListAdapter(var context: Context, private val recyclerView: RecyclerView): RecyclerView.Adapter<ProblemListAdapter.ViewHolder>() {
+class ProblemListAdapter(var context: Context, recyclerView: RecyclerView): RecyclerView.Adapter<ProblemListAdapter.ViewHolder>() {
     var problems = ArrayList<ASMD.Problem>()
-
-    fun setProblem(problems: ArrayList<ASMD.Problem>) {
-        this.problems = problems
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     init {
         val manager = LinearLayoutManager(context)
