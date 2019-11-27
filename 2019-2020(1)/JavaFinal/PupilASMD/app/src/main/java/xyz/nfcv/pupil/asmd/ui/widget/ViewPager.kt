@@ -1,4 +1,4 @@
-package xyz.nfcv.pupil.asmd.widget
+package xyz.nfcv.pupil.asmd.ui.widget
 
 import android.annotation.SuppressLint
 import android.content.Context

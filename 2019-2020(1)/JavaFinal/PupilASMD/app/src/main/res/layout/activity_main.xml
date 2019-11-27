@@ -43,7 +43,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <xyz.nfcv.pupil.asmd.widget.ViewPager
+        <xyz.nfcv.pupil.asmd.ui.widget.ViewPager
             android:id="@+id/main_viewPager"
             android:layout_below="@id/app_bar"
             android:layout_alignParentBottom="true"

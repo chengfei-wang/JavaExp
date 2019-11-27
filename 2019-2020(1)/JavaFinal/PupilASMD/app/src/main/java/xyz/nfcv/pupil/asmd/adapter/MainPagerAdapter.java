@@ -4,13 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
 import java.util.ArrayList;
-
-import xyz.nfcv.pupil.asmd.ui.fragment.AnalysisFragment;
-import xyz.nfcv.pupil.asmd.ui.fragment.ExamFragment;
-import xyz.nfcv.pupil.asmd.ui.fragment.ManageFragment;
-import xyz.nfcv.pupil.asmd.widget.ViewPager;
+import xyz.nfcv.pupil.asmd.ui.fragment.*;
+import xyz.nfcv.pupil.asmd.ui.widget.ViewPager;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> fragments = new ArrayList<>();
