@@ -8,10 +8,10 @@ import android.view.ViewGroup
 
 import xyz.nfcv.pupil.asmd.R
 
-class TestFragment : Fragment() {
+class ExamFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_test, container, false)
+        return inflater.inflate(R.layout.fragment_exam, container, false)
     }
 
 }

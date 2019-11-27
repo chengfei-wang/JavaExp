@@ -8,7 +8,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 import xyz.nfcv.pupil.asmd.ui.fragment.AnalysisFragment;
-import xyz.nfcv.pupil.asmd.ui.fragment.TestFragment;
+import xyz.nfcv.pupil.asmd.ui.fragment.ExamFragment;
+import xyz.nfcv.pupil.asmd.ui.fragment.ManageFragment;
 import xyz.nfcv.pupil.asmd.widget.ViewPager;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
@@ -17,8 +18,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public MainPagerAdapter(@NonNull FragmentManager fm, ViewPager mainViewpager) {
         super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        fragments.add(new TestFragment());
+        fragments.add(new ExamFragment());
         fragments.add(new AnalysisFragment());
+        fragments.add(new ManageFragment());
 
         mainViewpager.setAdapter(this);
     }

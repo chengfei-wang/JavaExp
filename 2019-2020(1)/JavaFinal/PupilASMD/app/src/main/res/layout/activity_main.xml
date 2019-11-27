@@ -29,7 +29,7 @@
                         app:srcCompat="@drawable/ic_edit_white" />
                     <TextView
                         android:id="@+id/main_title"
-                        android:text="@string/test"
+                        android:text="@string/exam"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -39,25 +39,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:ignore="RelativeOverlap" />
-
-                    <Button
-                        android:background="@drawable/border_capsule_28dp"
-                        android:text="开始"
-                        android:textStyle="bold"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/menu_problem_settings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="28dp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/menu_problem_settings"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:srcCompat="@drawable/ic_more_vertical_white" />
                 </RelativeLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_home_nav.*
 import xyz.nfcv.pupil.asmd.R
 
 class HomeNavFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
-    var onPageSelectedListener: OnPageSelectedListener? = null
+    private var onPageSelectedListener: OnPageSelectedListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,7 +32,7 @@ class HomeNavFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     }
 
     enum class Pages {
-        TEST, ANALYSIS
+        EXAM, ANALYSIS, MANAGE;
     }
 
     interface OnPageSelectedListener {
@@ -41,8 +41,9 @@ class HomeNavFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when(checkedId) {
-            R.id.sheet_test -> onPageSelectedListener?.onPageChanged(Pages.TEST)
+            R.id.sheet_exam -> onPageSelectedListener?.onPageChanged(Pages.EXAM)
             R.id.sheet_analysis -> onPageSelectedListener?.onPageChanged(Pages.ANALYSIS)
+            R.id.sheet_manage -> onPageSelectedListener?.onPageChanged(Pages.MANAGE)
         }
     }
 }

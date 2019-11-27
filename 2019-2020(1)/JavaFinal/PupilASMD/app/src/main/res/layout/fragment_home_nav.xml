@@ -46,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioButton
-            android:id="@+id/sheet_test"
-            android:text="@string/test"
+            android:id="@+id/sheet_exam"
+            android:text="@string/exam"
             android:textSize="16sp"
             android:checked="true"
             android:paddingStart="16dp"
@@ -61,6 +61,18 @@
             android:id="@+id/sheet_analysis"
             android:layout_marginTop="4dp"
             android:text="@string/analysis"
+            android:textSize="16sp"
+            android:textColor="@drawable/radio_select_text"
+            android:background="@drawable/nav_item_background"
+            android:button="@drawable/ic_data"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <RadioButton
+            android:id="@+id/sheet_manage"
+            android:layout_marginTop="4dp"
+            android:text="@string/manage"
             android:textSize="16sp"
             android:textColor="@drawable/radio_select_text"
             android:background="@drawable/nav_item_background"
