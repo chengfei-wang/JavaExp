@@ -1,6 +1,8 @@
 package xyz.nfcv.pupil.asmd.ui
 
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -21,6 +23,7 @@ import xyz.nfcv.pupil.asmd.`fun`.ASMD
 import xyz.nfcv.pupil.asmd.app.APP
 import xyz.nfcv.pupil.asmd.ui.theme.*
 import xyz.nfcv.pupil.asmd.ui.widget.*
+import kotlin.coroutines.coroutineContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-val problems = ASMD.generateProblem(10, 4, ASMD.Operator.SUB)
+val problems = ASMD.generateProblem(100, 3, ASMD.Operator.ADD)
 
 @Preview
 @Composable
@@ -143,10 +146,7 @@ fun AnalysisScreen(openDrawer: () -> Unit) {
     val context = +ambient(ContextAmbient)
     FlexColumn {
         inflexible {
-            TopAppBar(
-                title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "分析") } },
-                navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
-            )
+            TopAppBar(title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "分析") } }, navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } })
         }
     }
 }
@@ -155,8 +155,15 @@ fun AnalysisScreen(openDrawer: () -> Unit) {
 fun ManageScreen(openDrawer: () -> Unit) {
     val context = +ambient(ContextAmbient)
     var opt: ASMD.Operator by + state { ASMD.Operator.ADD }
-    var len by + state { 0 }
+    var len by + state { 1 }
+    var showConfirmDialog by + state {false}
     val exams = APP.helper.getExams()
+
+    if(showConfirmDialog) {
+        AddExamConfirm(operator = opt, length = len) {
+            showConfirmDialog = false
+        }
+    }
 
     FlexColumn {
         inflexible {
@@ -167,18 +174,29 @@ fun ManageScreen(openDrawer: () -> Unit) {
         }
         inflexible {
             Column {
-                Padding(8.dp) {
-                    Text("$len 位 $opt $len 位 = ?", style = +themeTextStyle { h5 })
+                HeightSpacer(height = 8.dp)
+                FlexRow {
+                    inflexible {
+                        WidthSpacer(width = 8.dp)
+                        Text("$len 位 $opt $len 位 = ?", style = +themeTextStyle { h5 })
+                    }
+                    expanded(1f) {
+                        WidthSpacer(width = 1.dp)
+                    }
+                    inflexible {
+                        Button("提交", onClick = {
+                            showConfirmDialog = true
+                        })
+                        WidthSpacer(width = 8.dp)
+                    }
                 }
+                HeightSpacer(height = 8.dp)
                 ASMDOptBar(listener = object : OnOperatorSelectedListener {
                     override fun onOperatorChanged(operator: ASMD.Operator) { opt = operator }
                 })
                 HeightSpacer(height = 8.dp)
                 ASMDLenBar(listener = object : OnLenSelectedListener {
-                    override fun onLenChanged(length: Int) {
-                        len = length
-                    }
-
+                    override fun onLenChanged(length: Int) { len = length }
                 })
             }
         }
@@ -272,10 +290,75 @@ fun ASMDLenBar(listener: OnLenSelectedListener) {
     }
 }
 
+@Composable
+fun ASMDSizeBar(listener: OnLenSelectedListener) {
+    FlexRow {
+        FlexRow {
+            inflexible {
+                WidthSpacer(width = 8.dp)
+                Button(text = "1", onClick = {
+                    listener.onLenChanged(1)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "2", onClick = {
+                    listener.onLenChanged(2)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "3", onClick = {
+                    listener.onLenChanged(3)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "4", onClick = {
+                    listener.onLenChanged(4)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "5", onClick = {
+                    listener.onLenChanged(5)
+                })
+                WidthSpacer(width = 8.dp)
+            }
+        }
+    }
+}
+
 interface OnOperatorSelectedListener {
     fun onOperatorChanged(operator: ASMD.Operator)
 }
 
 interface OnLenSelectedListener {
     fun onLenChanged(@MagicConstant(flags = [1, 2, 3, 4, 5]) length: Int)
+}
+
+interface OnSizeChangedListener {
+    fun onSizeChanged(size: Int)
+}
+
+@Composable
+fun AddExamConfirm(operator: ASMD.Operator, length: Int, onDismiss: () -> Unit) {
+    val context = +ambient(ContextAmbient)
+    AlertDialog(
+            onCloseRequest = onDismiss,
+            text = {
+                Text("新建符号为$operator, ${length}位的题目", style = +themeTextStyle { h5 })
+            },
+            confirmButton = {
+                onDismiss
+            }
+    )
 }

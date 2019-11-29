@@ -1,4 +1,4 @@
-package xyz.nfcv.pupil.asmd.ui.theme
+package xyz.nfcv.pupil.asmd.ui
 
 sealed class Screen {
     object Exam : Screen()
