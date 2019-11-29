@@ -59,7 +59,7 @@ fun ExamProblemsList(problems: ArrayList<ASMD.Problem>) {
 }
 
 @Composable
-fun ExamList(exams: ArrayList<ProblemSQLHelper.Exam>, onClick: () -> Unit) {
+fun ExamsList(exams: ArrayList<ProblemSQLHelper.Exam>, onClick: () -> Unit) {
     val context = +ambient(ContextAmbient)
     VerticalScroller {
         Column {
@@ -88,29 +88,4 @@ fun ExamList(exams: ArrayList<ProblemSQLHelper.Exam>, onClick: () -> Unit) {
             }
         }
     }
-}
-
-@Composable
-fun AddExamOption(onDismiss: () -> Unit) {
-    AlertDialog(
-            onCloseRequest = {
-                // Because we are not setting openDialog.value to false here,
-                // the user can close this dialog only via one of the buttons we provide.
-            },
-            title = {
-                Text(text = "Title")
-            },
-            text = {
-                Text("This area typically contains the supportive text" +
-                        " which presents the details regarding the Dialog's purpose.")
-            },
-            confirmButton = {
-                Button("Confirm", onClick = onDismiss)
-            },
-            dismissButton = {
-                Button("Dismiss", onClick = onDismiss)
-            },
-            buttonLayout = AlertDialogButtonLayout.SideBySide
-    )
-
 }

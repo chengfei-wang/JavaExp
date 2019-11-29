@@ -1,8 +1,6 @@
 package xyz.nfcv.pupil.asmd.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -11,20 +9,15 @@ import androidx.compose.state
 import androidx.compose.unaryPlus
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.*
-import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
-import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
 import androidx.ui.material.*
-import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
-import androidx.ui.res.imageResource
-import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
+import org.intellij.lang.annotations.MagicConstant
 import xyz.nfcv.pupil.asmd.R
 import xyz.nfcv.pupil.asmd.`fun`.ASMD
-import xyz.nfcv.pupil.asmd.`fun`.ProblemSQLHelper
 import xyz.nfcv.pupil.asmd.app.APP
 import xyz.nfcv.pupil.asmd.ui.theme.*
 import xyz.nfcv.pupil.asmd.ui.widget.*
@@ -122,7 +115,7 @@ private fun DrawerButton(@DrawableRes icon: Int, label: String, isSelected: Bool
 }
 
 @Composable
-private fun HomeScreenDivider() {
+private fun ItemDivider() {
     Padding(left = 14.dp, right = 14.dp) {
         Opacity(0.08f) { Divider() }
     }
@@ -161,14 +154,9 @@ fun AnalysisScreen(openDrawer: () -> Unit) {
 @Composable
 fun ManageScreen(openDrawer: () -> Unit) {
     val context = +ambient(ContextAmbient)
-    var showDialog by +state { false }
+    var opt: ASMD.Operator by + state { ASMD.Operator.ADD }
+    var len by + state { 0 }
     val exams = APP.helper.getExams()
-    if (showDialog) {
-        Log.d("TAG", "SHOW DIALOG")
-        AddExamOption {
-            showDialog = false
-        }
-    }
 
     FlexColumn {
         inflexible {
@@ -177,52 +165,117 @@ fun ManageScreen(openDrawer: () -> Unit) {
                 navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
             )
         }
-        expanded(1f) {
-            ExamList(exams) {}
-        }
         inflexible {
-            FlexRow {
-                expanded(1f) {
-                    WidthSpacer(1.dp)
+            Column {
+                Padding(8.dp) {
+                    Text("$len 位 $opt $len 位 = ?", style = +themeTextStyle { h5 })
                 }
-                inflexible {
-                    BottomBarAction(id = R.drawable.ic_add_32dp) {
-                        showDialog = true
+                ASMDOptBar(listener = object : OnOperatorSelectedListener {
+                    override fun onOperatorChanged(operator: ASMD.Operator) { opt = operator }
+                })
+                HeightSpacer(height = 8.dp)
+                ASMDLenBar(listener = object : OnLenSelectedListener {
+                    override fun onLenChanged(length: Int) {
+                        len = length
                     }
-                }
+
+                })
             }
         }
-    }
-}
-@Composable
-private fun BottomBarAction(@DrawableRes id: Int, onClick: () -> Unit) {
-    Ripple(bounded = false, radius = 24.dp) {
-        Clickable(onClick = onClick) {
-            Padding(12.dp) {
-                Container(width = 24.dp, height = 24.dp) {
-                    DrawVector(+vectorResource(id))
-                }
-            }
+        expanded(1f) {
+            ExamsList(exams) {}
         }
     }
 }
 
 @Composable
-fun AddExamOption(onDismiss: () -> Unit) {
-    AlertDialog(
-            onCloseRequest = onDismiss,
-            text = {
-                Text(
-                        text = "Functionality not available \uD83D\uDE48",
-                        style = +themeTextStyle { body2 }
-                )
-            },
-            confirmButton = {
-                Button(
-                        text = "CLOSE",
-                        style = TextButtonStyle(),
-                        onClick = onDismiss
-                )
+fun ASMDOptBar(listener: OnOperatorSelectedListener) {
+    FlexRow {
+        inflexible {
+            WidthSpacer(width = 8.dp)
+            Button(text = "加", onClick = {
+                listener.onOperatorChanged(ASMD.Operator.ADD)
+            })
+        }
+        expanded(1f) {
+            WidthSpacer(width = 1.dp)
+        }
+        inflexible {
+            Button(text = "减", onClick = {
+                listener.onOperatorChanged(ASMD.Operator.SUB)
+            })
+        }
+        expanded(1f) {
+            WidthSpacer(width = 1.dp)
+        }
+        inflexible {
+            Button(text = "乘", onClick = {
+                listener.onOperatorChanged(ASMD.Operator.MULTI)
+            })
+        }
+        expanded(1f) {
+            WidthSpacer(width = 1.dp)
+        }
+        inflexible {
+            Button(text = "除", onClick = {
+                listener.onOperatorChanged(ASMD.Operator.DIVIDE)
+            })
+            WidthSpacer(width = 8.dp)
+        }
+    }
+}
+
+@Composable
+fun ASMDLenBar(listener: OnLenSelectedListener) {
+    FlexRow {
+        FlexRow {
+            inflexible {
+                WidthSpacer(width = 8.dp)
+                Button(text = "1", onClick = {
+                    listener.onLenChanged(1)
+                })
             }
-    )
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "2", onClick = {
+                    listener.onLenChanged(2)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "3", onClick = {
+                    listener.onLenChanged(3)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "4", onClick = {
+                    listener.onLenChanged(4)
+                })
+            }
+            expanded(1f) {
+                WidthSpacer(width = 1.dp)
+            }
+            inflexible {
+                Button(text = "5", onClick = {
+                    listener.onLenChanged(5)
+                })
+                WidthSpacer(width = 8.dp)
+            }
+        }
+    }
+}
+
+interface OnOperatorSelectedListener {
+    fun onOperatorChanged(operator: ASMD.Operator)
+}
+
+interface OnLenSelectedListener {
+    fun onLenChanged(@MagicConstant(flags = [1, 2, 3, 4, 5]) length: Int)
 }
