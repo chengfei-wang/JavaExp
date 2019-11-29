@@ -1,6 +1,8 @@
 package xyz.nfcv.pupil.asmd.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -9,16 +11,23 @@ import androidx.compose.state
 import androidx.compose.unaryPlus
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.*
+import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
+import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
 import androidx.ui.material.*
+import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
+import androidx.ui.res.imageResource
+import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
-import xyz.nfcv.pupil.asmd.ui.widget.VectorImage
-import xyz.nfcv.pupil.asmd.ui.widget.VectorImageButton
 import xyz.nfcv.pupil.asmd.R
+import xyz.nfcv.pupil.asmd.`fun`.ASMD
+import xyz.nfcv.pupil.asmd.`fun`.ProblemSQLHelper
+import xyz.nfcv.pupil.asmd.app.APP
 import xyz.nfcv.pupil.asmd.ui.theme.*
+import xyz.nfcv.pupil.asmd.ui.widget.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+val problems = ASMD.generateProblem(10, 4, ASMD.Operator.SUB)
 
 @Preview
 @Composable
@@ -113,7 +123,9 @@ private fun DrawerButton(@DrawableRes icon: Int, label: String, isSelected: Bool
 
 @Composable
 private fun HomeScreenDivider() {
-    Padding(left = 14.dp, right = 14.dp) { Opacity(0.08f) { Divider() } }
+    Padding(left = 14.dp, right = 14.dp) {
+        Opacity(0.08f) { Divider() }
+    }
 }
 
 @Composable
@@ -122,9 +134,12 @@ fun ExamScreen(openDrawer: () -> Unit) {
     FlexColumn {
         inflexible {
             TopAppBar(
-                    title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "测试") } },
-                    navigationIcon = { VectorImageButton(R.drawable.ic_edit_white) { openDrawer() } }
+                title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "测试") } },
+                navigationIcon = { VectorImageButton(R.drawable.ic_edit_white) { openDrawer() } }
             )
+        }
+        flexible(flex = 1f) {
+            ExamProblemsList(problems)
         }
     }
 }
@@ -136,8 +151,8 @@ fun AnalysisScreen(openDrawer: () -> Unit) {
     FlexColumn {
         inflexible {
             TopAppBar(
-                    title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "分析") } },
-                    navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
+                title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "分析") } },
+                navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
             )
         }
     }
@@ -146,12 +161,68 @@ fun AnalysisScreen(openDrawer: () -> Unit) {
 @Composable
 fun ManageScreen(openDrawer: () -> Unit) {
     val context = +ambient(ContextAmbient)
+    var showDialog by +state { false }
+    val exams = APP.helper.getExams()
+    if (showDialog) {
+        Log.d("TAG", "SHOW DIALOG")
+        AddExamOption {
+            showDialog = false
+        }
+    }
+
     FlexColumn {
         inflexible {
             TopAppBar(
-                    title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "管理") } },
-                    navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
+                title = { Padding(padding = EdgeInsets(0.dp, 16.dp, 0.dp, 16.dp)) { Text(text = "管理") } },
+                navigationIcon = { VectorImageButton(R.drawable.ic_data_white) { openDrawer() } }
             )
         }
+        expanded(1f) {
+            ExamList(exams) {}
+        }
+        inflexible {
+            FlexRow {
+                expanded(1f) {
+                    WidthSpacer(1.dp)
+                }
+                inflexible {
+                    BottomBarAction(id = R.drawable.ic_add_32dp) {
+                        showDialog = true
+                    }
+                }
+            }
+        }
     }
+}
+@Composable
+private fun BottomBarAction(@DrawableRes id: Int, onClick: () -> Unit) {
+    Ripple(bounded = false, radius = 24.dp) {
+        Clickable(onClick = onClick) {
+            Padding(12.dp) {
+                Container(width = 24.dp, height = 24.dp) {
+                    DrawVector(+vectorResource(id))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AddExamOption(onDismiss: () -> Unit) {
+    AlertDialog(
+            onCloseRequest = onDismiss,
+            text = {
+                Text(
+                        text = "Functionality not available \uD83D\uDE48",
+                        style = +themeTextStyle { body2 }
+                )
+            },
+            confirmButton = {
+                Button(
+                        text = "CLOSE",
+                        style = TextButtonStyle(),
+                        onClick = onDismiss
+                )
+            }
+    )
 }

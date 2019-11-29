@@ -2,7 +2,9 @@ package xyz.nfcv.pupil.asmd.ui.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.Composable
+import androidx.compose.ambient
 import androidx.compose.unaryPlus
+import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Dp
 import androidx.ui.core.WithDensity
 import androidx.ui.core.dp
@@ -10,6 +12,7 @@ import androidx.ui.foundation.Clickable
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.Container
+import androidx.ui.layout.Padding
 import androidx.ui.material.ripple.Ripple
 import androidx.ui.res.vectorResource
 
@@ -17,9 +20,13 @@ val DEFAULT_WIDTH = 24.dp
 
 @Composable
 fun VectorImageButton(@DrawableRes id: Int, width: Dp = DEFAULT_WIDTH, height: Dp = DEFAULT_WIDTH, onClick: () -> Unit) {
-    Ripple(bounded = false) {
+    Ripple(bounded = false, radius =  24.dp) {
         Clickable(onClick = onClick) {
-            VectorImage(id, width = width, height = height)
+            Padding(12.dp) {
+                Container(width = 24.dp, height = 24.dp) {
+                    DrawVector(+vectorResource(id))
+                }
+            }
         }
     }
 }

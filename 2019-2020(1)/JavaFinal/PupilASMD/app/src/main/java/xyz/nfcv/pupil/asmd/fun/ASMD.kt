@@ -3,7 +3,7 @@ package xyz.nfcv.pupil.asmd.`fun`
 import org.intellij.lang.annotations.MagicConstant
 
 object ASMD {
-    fun randInt(@MagicConstant(flags = [1, 2, 3, 4, 5]) len: Int): Int {
+    private fun randInt(@MagicConstant(flags = [1, 2, 3, 4, 5]) len: Int): Int {
         return when (len) {
             1 -> (1..9).random()
             2 -> (10..99).random()

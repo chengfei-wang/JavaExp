@@ -9,11 +9,13 @@ class APP : Application() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        db = ProblemSQLHelper(context).writableDatabase
+        helper = ProblemSQLHelper(context)
+        db = helper.writableDatabase
     }
 
     companion object {
         lateinit var context: Context
         lateinit var db: SQLiteDatabase
+        lateinit var helper: ProblemSQLHelper
     }
 }

@@ -29,7 +29,7 @@ class ProblemSQLHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nul
 
     fun getExams(): ArrayList<Exam> {
         val list = ArrayList<Exam>()
-        val cursor = db.rawQuery("select exam_id, title, create_time, problems, answers, limit_time from $TABLE_RECORD", arrayOf())
+        val cursor = db.rawQuery("select exam_id, title, create_time, problems, answers, limit_time from $TABLE_EXAM", arrayOf())
         if(cursor.count > 0 && cursor.moveToFirst()) {
             do {
                 val examId = cursor.getString(0)
@@ -114,7 +114,7 @@ class ProblemSQLHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nul
         const val TABLE_RECORD = "record"
         const val TABLE_EXAM = "exam"
         const val CREATE_TABLE_RECORD = "create table $TABLE_RECORD(_id integer primary key autoincrement, name text not null, exam_id text not null, finish_time timestamp not null, answers text not null, total_time integer not null)"
-        const val CREATE_TABLE_EXAM = "create table $TABLE_RECORD(_id integer primary key autoincrement, exam_id varchar(32) not null unique, title text not null, create_time timestamp not null, problems text not null, answers text not null, limit_time integer not null)"
+        const val CREATE_TABLE_EXAM = "create table $TABLE_EXAM(_id integer primary key autoincrement, exam_id varchar(32) not null unique, title text not null, create_time timestamp not null, problems text not null, answers text not null, limit_time integer not null)"
 
     }
 
