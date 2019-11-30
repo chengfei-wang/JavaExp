@@ -1,8 +1,11 @@
 package dev.tty.nfcv.lottery.draw;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import static dev.tty.nfcv.lottery.draw.Config.APPLICATION_NAME;
@@ -52,10 +55,6 @@ class MainMenuBar extends JMenuBar {
         add(recordMenu);
         parent.setJMenuBar(this);
 
-//        JMenu infoMenu = new JMenu("信息");
-//        JMenuItem infoMenuEdit = new JMenuItem("录入");
-//        infoMenu.add(infoMenuEdit);
-//        add(infoMenu);
         recordMenuOpen.addActionListener(e1 -> {
 
         });
@@ -66,7 +65,7 @@ class FunctionPanel extends JPanel {
     interface OnStartPressedListener {
         void onStartPressed(int first, int second, int third);
     }
-    OnStartPressedListener listener;
+    private OnStartPressedListener listener;
     FunctionPanel(JFrame parent) {
         int w = Config.WIDTH / 3;
         int h = Config.HEIGHT;
@@ -93,13 +92,12 @@ class FunctionPanel extends JPanel {
         thirdPrize.setBounds(0, 112, w, 32);
 
         JButton start = new JButton("开始抽奖");
-        start.setBounds(4, 172, w - 8, 28);
+        start.setBounds(4, 148, w - 8, 28);
         start.setBorderPainted(false);
         start.setBackground(Color.WHITE);
         add(start);
 
         UserTable userTable = new UserTable(this);
-        userTable.setBounds(4, 200, w, 200);
 
         start.addActionListener(e -> {
             listener.onStartPressed(firstPrize.size, secondPrize.size, thirdPrize.size);
@@ -171,19 +169,33 @@ class ResultListPanel extends JPanel implements LotteryDrawFrame.OnResultGenList
 class UserTable extends JTable {
     UserTable(JPanel parent) {
         super(0, 2);
+        setBackground(Color.LIGHT_GRAY);
         JScrollPane pane = new JScrollPane(this);
+        pane.setBounds(0, 180, 256, 250);
         getColumnModel().getColumn(0).setHeaderValue("姓名");
         getColumnModel().getColumn(1).setHeaderValue("电话");
         parent.add(pane);
-        parent.add(this);
+        setRowHeight(25);
+        DefaultTableModel model = (DefaultTableModel)getModel();
+        model.addRow(new String[] {"", ""});
+        model.addTableModelListener(e -> {
+            int rows = getRowCount();
+            int row = getSelectedRow();
+            int column = getSelectedColumn();
+            if (row == rows - 1 && column == 1 && !getValueAt(row, 0).equals("")) {
+                model.addRow(new String[] {"", ""});
+            }
+        });
     }
 }
 
 class ResultTable extends JTable {
     ResultTable(JPanel parent) {
         super(0, 3);
-        setSize(parent.getWidth(), parent.getHeight());
         JScrollPane pane = new JScrollPane(this);
+        setEnabled(false);
+        setRowHeight(25);
+        pane.setBounds(0, 0, parent.getWidth(), parent.getHeight());
         getColumnModel().getColumn(0).setHeaderValue("姓名");
         getColumnModel().getColumn(1).setHeaderValue("电话");
         getColumnModel().getColumn(2).setHeaderValue("奖项");
