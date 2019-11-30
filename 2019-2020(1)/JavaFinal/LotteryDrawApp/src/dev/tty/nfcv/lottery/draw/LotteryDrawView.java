@@ -184,6 +184,10 @@ class UserTable extends JTable {
             int column = getSelectedColumn();
             if (row == rows - 1 && column == 1 && !getValueAt(row, 0).equals("")) {
                 model.addRow(new String[] {"", ""});
+            } else if (row == rows - 1 && column == 0 && !getValueAt(row, 1).equals("")) {
+                model.addRow(new String[] {"", ""});
+            } else if (row < rows - 1 && getValueAt(row, 0).equals("") && getValueAt(row, 1).equals("")) {
+                model.removeRow(row);
             }
         });
     }
