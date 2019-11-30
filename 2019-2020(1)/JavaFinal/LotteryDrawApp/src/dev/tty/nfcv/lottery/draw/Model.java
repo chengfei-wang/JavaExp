@@ -1,14 +1,90 @@
 package dev.tty.nfcv.lottery.draw;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Objects;
+
 public class Model {
-    class User {
+    static class User {
         String name;
         String phone;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof User)) return false;
+            User user = (User) o;
+            return Objects.equals(phone, user.phone);
+        }
+
+        User(String name, String phone) {
+            this.name = name;
+            this.phone = phone;
+        }
+
+        @Override
+        public int hashCode() {
+            return phone != null ? phone.hashCode() : 0;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("name='%s', phone='%s'", name, phone);
+        }
     }
 
-    class Result {
+    static class Result {
         String name;
         String phone;
         String prize;
+
+        enum Prize {
+            FIRST, SECOND, THIRD;
+
+            @Override
+            public String toString() {
+                switch (this) {
+                    case FIRST:
+                        return "一等奖";
+                    case SECOND:
+                        return "二等奖";
+                    case THIRD:
+                        return "三等奖";
+                }
+                return "未中奖";
+            }
+        }
+
+        @Override
+        public String toString() {
+            return String.format("name='%s', phone='%s', prize='%s'", name, phone, prize);
+        }
+
+        public Result(String name, String phone, String prize) {
+            this.name = name;
+            this.phone = phone;
+            this.prize = prize;
+        }
+
+        static ArrayList<Result> getResult(int first, int second, int third, ArrayList<User> users) {
+            Collections.shuffle(users);
+            ArrayList<Result> results = new ArrayList<>();
+            for (User user : users) {
+                if (first > 0) {
+                    results.add(new Result(user.name, user.phone, Prize.FIRST.toString()));
+                    first--;
+                } else if (second > 0) {
+                    results.add(new Result(user.name, user.phone, Prize.SECOND.toString()));
+                    second--;
+                } else if (third > 0) {
+                    results.add(new Result(user.name, user.phone, Prize.THIRD.toString()));
+                    third--;
+                } else {
+                    break;
+                }
+            }
+            return results;
+        }
     }
 }

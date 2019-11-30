@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static dev.tty.nfcv.lottery.draw.Config.APPLICATION_NAME;
 
@@ -36,11 +37,16 @@ class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedLis
     }
 
     @Override
-    public void onStartPressed(int first, int second, int third) {
+    public void onStartPressed(int first, int second, int third, ArrayList<Model.User> users) {
         System.out.println("first: " + first);
         System.out.println("second: " + second);
         System.out.println("third: " + third);
+        System.out.println("观众名单");
+        for (Model.User user : users) {
+            System.out.println(user);
+        }
         System.out.println();
+        listener.onResult(Model.Result.getResult(first, second, third, users));
     }
 }
 
@@ -63,7 +69,7 @@ class MainMenuBar extends JMenuBar {
 
 class FunctionPanel extends JPanel {
     interface OnStartPressedListener {
-        void onStartPressed(int first, int second, int third);
+        void onStartPressed(int first, int second, int third, ArrayList<Model.User> users);
     }
     private OnStartPressedListener listener;
     FunctionPanel(JFrame parent) {
@@ -100,7 +106,7 @@ class FunctionPanel extends JPanel {
         UserTable userTable = new UserTable(this);
 
         start.addActionListener(e -> {
-            listener.onStartPressed(firstPrize.size, secondPrize.size, thirdPrize.size);
+            listener.onStartPressed(firstPrize.size, secondPrize.size, thirdPrize.size, userTable.getUsers());
         });
     }
 }
@@ -162,11 +168,16 @@ class ResultListPanel extends JPanel implements LotteryDrawFrame.OnResultGenList
 
     @Override
     public void onResult(ArrayList<Model.Result> results) {
-
+        System.out.println("获奖名单");
+        for (Model.Result result : results) {
+            System.out.println(result);
+        }
+        System.out.println();
     }
 }
 
 class UserTable extends JTable {
+    DefaultTableModel model;
     UserTable(JPanel parent) {
         super(0, 2);
         setBackground(Color.LIGHT_GRAY);
@@ -176,7 +187,7 @@ class UserTable extends JTable {
         getColumnModel().getColumn(1).setHeaderValue("电话");
         parent.add(pane);
         setRowHeight(25);
-        DefaultTableModel model = (DefaultTableModel)getModel();
+        model = (DefaultTableModel)getModel();
         model.addRow(new String[] {"", ""});
         model.addTableModelListener(e -> {
             int rows = getRowCount();
@@ -190,6 +201,20 @@ class UserTable extends JTable {
                 model.removeRow(row);
             }
         });
+    }
+
+    ArrayList<Model.User> getUsers() {
+        HashSet<Model.User> users = new HashSet<>();
+        int rows = model.getRowCount();
+        for (int i = 0; i < rows; i++) {
+            String name = (String) model.getValueAt(i, 0);
+            String phone = (String) model.getValueAt(i, 1);
+            if (name.equals("") || phone.equals("")) {
+                continue;
+            }
+            users.add(new Model.User(name, phone));
+        }
+        return new ArrayList<>(users);
     }
 }
 
