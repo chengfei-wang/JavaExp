@@ -1,8 +1,6 @@
 package xyz.nfcv.pupil.asmd.ui
 
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -21,9 +19,12 @@ import org.intellij.lang.annotations.MagicConstant
 import xyz.nfcv.pupil.asmd.R
 import xyz.nfcv.pupil.asmd.`fun`.ASMD
 import xyz.nfcv.pupil.asmd.app.APP
-import xyz.nfcv.pupil.asmd.ui.theme.*
-import xyz.nfcv.pupil.asmd.ui.widget.*
-import kotlin.coroutines.coroutineContext
+import xyz.nfcv.pupil.asmd.ui.theme.lightThemeColors
+import xyz.nfcv.pupil.asmd.ui.theme.themeTypography
+import xyz.nfcv.pupil.asmd.ui.widget.ExamProblemsList
+import xyz.nfcv.pupil.asmd.ui.widget.ExamsList
+import xyz.nfcv.pupil.asmd.ui.widget.VectorImage
+import xyz.nfcv.pupil.asmd.ui.widget.VectorImageButton
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -357,8 +358,6 @@ fun AddExamConfirm(operator: ASMD.Operator, length: Int, onDismiss: () -> Unit) 
             text = {
                 Text("新建符号为$operator, ${length}位的题目", style = +themeTextStyle { h5 })
             },
-            confirmButton = {
-                onDismiss
-            }
+            confirmButton = onDismiss
     )
 }
