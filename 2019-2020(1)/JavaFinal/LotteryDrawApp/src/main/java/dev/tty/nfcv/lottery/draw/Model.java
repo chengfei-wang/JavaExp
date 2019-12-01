@@ -2,7 +2,6 @@ package dev.tty.nfcv.lottery.draw;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Model {
@@ -67,6 +66,13 @@ public class Model {
             this.prize = prize;
         }
 
+        public static String trim(String phone) {
+            if (phone.length() < 2) {
+                phone = "**";
+            }
+            return phone.substring(0, phone.length()-2)+"**";
+        }
+
         static ArrayList<Result> getResult(int first, int second, int third, ArrayList<User> users) {
             Collections.shuffle(users);
             ArrayList<Result> results = new ArrayList<>();
@@ -85,6 +91,26 @@ public class Model {
                 }
             }
             return results;
+        }
+    }
+
+    static class FullRecord {
+        String theme;
+        ArrayList<User> users;
+        ArrayList<Result> results;
+
+        public FullRecord(String theme, ArrayList<User> users, ArrayList<Result> results) {
+            this.theme = theme;
+            this.users = users;
+            this.results = results;
+        }
+
+        @Override
+        public String toString() {
+            if (theme.equals("无记录")) {
+                return theme;
+            }
+            return "主题-" + theme;
         }
     }
 }

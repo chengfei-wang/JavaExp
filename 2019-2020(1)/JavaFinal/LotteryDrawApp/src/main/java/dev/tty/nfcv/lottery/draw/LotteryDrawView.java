@@ -8,10 +8,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.SplittableRandom;
 
 import static dev.tty.nfcv.lottery.draw.Config.APPLICATION_NAME;
+import static dev.tty.nfcv.lottery.draw.Config.fullRecords;
 
 class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedListener {
+
+    ArrayList<Model.User> users;
+    ArrayList<Model.Result> results;
+    String theme;
 
     interface OnResultGenListener {
         void onResult(ArrayList<Model.Result> results);
@@ -27,9 +33,19 @@ class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedLis
         setBackground(Color.LIGHT_GRAY);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         MainMenuBar mainMenuBar = new MainMenuBar(this);
+        mainMenuBar.recordMenuSave.addActionListener(e -> {
+            System.out.println("save-record");
+            if (theme == null || theme.equals("") || users == null || results == null) {
+                //未完成抽奖
+                System.out.println("主题为空或还未完成抽奖，不保存");
+                return;
+            }
+            fullRecords.add(new Model.FullRecord(theme, users, results));
+            Config.save();
+            System.out.println("保存成功");
+        });
         FunctionPanel functionPanel = new FunctionPanel(this);
-        ResultListPanel userListPanel = new ResultListPanel(this);
-        listener = userListPanel;
+        listener = new ResultListPanel(this);
     }
 
     void display() {
@@ -37,7 +53,8 @@ class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedLis
     }
 
     @Override
-    public void onStartPressed(int first, int second, int third, ArrayList<Model.User> users) {
+    public void onStartPressed(String theme, int first, int second, int third, ArrayList<Model.User> users) {
+        System.out.println("主题: " + theme);
         System.out.println("first: " + first);
         System.out.println("second: " + second);
         System.out.println("third: " + third);
@@ -46,30 +63,35 @@ class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedLis
             System.out.println(user);
         }
         System.out.println();
-        listener.onResult(Model.Result.getResult(first, second, third, users));
+        this.theme = theme;
+        this.users = users;
+        this.results = Model.Result.getResult(first, second, third, users);
+        listener.onResult(this.results);
     }
 }
 
 class MainMenuBar extends JMenuBar {
+    JMenuItem recordMenuSave;
     MainMenuBar(JFrame parent) {
         setBackground(Color.WHITE);
         JMenu recordMenu = new JMenu("记录");
-        JMenuItem recordMenuOpen = new JMenuItem("打开");
+        JMenuItem recordMenuOpen = new JMenuItem("打开历史");
         recordMenu.add(recordMenuOpen);
-        JMenuItem recordMenuSave = new JMenuItem("保存");
+        recordMenuSave = new JMenuItem("保存记录");
         recordMenu.add(recordMenuSave);
         add(recordMenu);
         parent.setJMenuBar(this);
 
         recordMenuOpen.addActionListener(e1 -> {
-
+            System.out.println("open-history");
+            new HistoryFrame();
         });
     }
 }
 
 class FunctionPanel extends JPanel {
     interface OnStartPressedListener {
-        void onStartPressed(int first, int second, int third, ArrayList<Model.User> users);
+        void onStartPressed(String theme, int first, int second, int third, ArrayList<Model.User> users);
     }
     private OnStartPressedListener listener;
     FunctionPanel(JFrame parent) {
@@ -106,7 +128,7 @@ class FunctionPanel extends JPanel {
         UserTable userTable = new UserTable(this);
 
         start.addActionListener(e -> {
-            listener.onStartPressed(firstPrize.size, secondPrize.size, thirdPrize.size, userTable.getUsers());
+            listener.onStartPressed(themeField.getText(), firstPrize.size, secondPrize.size, thirdPrize.size, userTable.getUsers());
         });
     }
 }
@@ -157,12 +179,13 @@ class PrizeItemPanel extends JPanel {
 }
 
 class ResultListPanel extends JPanel implements LotteryDrawFrame.OnResultGenListener {
+    ResultTable resultTable;
     ResultListPanel(JFrame parent) {
         int w = Config.WIDTH * 2 / 3;
         int h = Config.HEIGHT;
         setBounds(w / 2 + 10, 0, w, h);
         setBackground(Color.WHITE);
-        ResultTable resultTable = new ResultTable(this);
+        resultTable = new ResultTable(this);
         parent.add(this);
     }
 
@@ -173,6 +196,11 @@ class ResultListPanel extends JPanel implements LotteryDrawFrame.OnResultGenList
             System.out.println(result);
         }
         System.out.println();
+        var model = (DefaultTableModel)resultTable.getModel();
+        model.getDataVector().clear();
+        for (Model.Result result: results) {
+            model.addRow(new String[] {result.name, Model.Result.trim(result.phone), result.prize});
+        }
     }
 }
 
@@ -229,5 +257,46 @@ class ResultTable extends JTable {
         getColumnModel().getColumn(1).setHeaderValue("电话");
         getColumnModel().getColumn(2).setHeaderValue("奖项");
         parent.add(pane);
+    }
+}
+
+class HistoryFrame extends JFrame {
+    HistoryFrame() {
+        System.out.println(fullRecords);
+        setSize(600, 400);
+        setLayout(null);
+        JComboBox<Model.FullRecord> historyComboBox = new JComboBox<>();
+        historyComboBox.setBounds(0, 0, 280, 24);
+        DefaultComboBoxModel<Model.FullRecord> historyComboBoxModel = (DefaultComboBoxModel<Model.FullRecord>)historyComboBox.getModel();
+        historyComboBoxModel.addAll(fullRecords);
+        add(historyComboBox);
+        if (fullRecords.size() > 0) {
+            historyComboBox.setSelectedIndex(0);
+        }
+        JTable historyTable= new JTable();
+        DefaultTableModel historyTableModel = (DefaultTableModel)historyTable.getModel();
+        JScrollPane pane = new JScrollPane(historyTable);
+        pane.setBounds(0, 30, 600, 360);
+        add(pane);
+        historyTableModel.addColumn("奖项");
+        historyTableModel.addColumn("姓名");
+        historyTableModel.addColumn("号码");
+        historyTable.setEnabled(false);
+        if (fullRecords.size() == 0) {
+            historyComboBoxModel.addElement(new Model.FullRecord("无记录", null, null));
+        } else {
+            for(Model.Result result: fullRecords.get(0).results) {
+                historyTableModel.addRow(new String[] {result.prize, result.name, Model.Result.trim(result.phone)});
+            }
+        }
+        historyComboBox.addItemListener(e -> {
+            var record = (Model.FullRecord)historyComboBoxModel.getSelectedItem();
+            historyTableModel.getDataVector().clear();
+            for(Model.Result result: record.results) {
+                historyTableModel.addRow(new String[] {result.prize, result.name, Model.Result.trim(result.phone)});
+            }
+        });
+        setVisible(true);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 }
