@@ -2,6 +2,7 @@ package dev.tty.nfcv.lottery.draw;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 
 public class Model {
@@ -98,11 +99,13 @@ public class Model {
         String theme;
         ArrayList<User> users;
         ArrayList<Result> results;
+        Date time;
 
-        public FullRecord(String theme, ArrayList<User> users, ArrayList<Result> results) {
+        public FullRecord(String theme, ArrayList<User> users, ArrayList<Result> results, Date time) {
             this.theme = theme;
             this.users = users;
             this.results = results;
+            this.time = time;
         }
 
         @Override
@@ -110,7 +113,7 @@ public class Model {
             if (theme.equals("无记录")) {
                 return theme;
             }
-            return "主题-" + theme;
+            return "主题-" + theme + "-" + time;
         }
     }
 }

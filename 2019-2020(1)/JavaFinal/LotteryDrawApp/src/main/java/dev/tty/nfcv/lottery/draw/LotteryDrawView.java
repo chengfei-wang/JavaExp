@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.SplittableRandom;
 
@@ -39,8 +40,11 @@ class LotteryDrawFrame extends JFrame implements FunctionPanel.OnStartPressedLis
                 //未完成抽奖
                 System.out.println("主题为空或还未完成抽奖，不保存");
                 return;
+            } else if (results.isEmpty()) {
+                System.out.println("抽奖结果为空，不保存");
+                return;
             }
-            fullRecords.add(new Model.FullRecord(theme, users, results));
+            fullRecords.add(new Model.FullRecord(theme, users, results, new Date()));
             Config.save();
             System.out.println("保存成功");
         });
@@ -283,7 +287,7 @@ class HistoryFrame extends JFrame {
         historyTableModel.addColumn("号码");
         historyTable.setEnabled(false);
         if (fullRecords.size() == 0) {
-            historyComboBoxModel.addElement(new Model.FullRecord("无记录", null, null));
+            historyComboBoxModel.addElement(new Model.FullRecord("无记录", null, null, null));
         } else {
             for(Model.Result result: fullRecords.get(0).results) {
                 historyTableModel.addRow(new String[] {result.prize, result.name, Model.Result.trim(result.phone)});
